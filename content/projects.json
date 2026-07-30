@@ -1,0 +1,94 @@
+{
+  "projects": [
+    {
+      "id": "multi-agent-orchestration",
+      "title": "Multi Agent",
+      "description": "Multi-Agent AI Orchestration system coordinating specialist agents for research, planning, and execution.",
+      "tech": ["AWS Bedrock AI", "Claude 3", "Python 3"],
+      "highlights": [
+        "Serverless Agent Swarm",
+        "IaC (AWS CDK)",
+        "Dynamic Tool Calling",
+        "Production Readiness"
+      ],
+      "repoUrl": "https://github.com/YOUR_GITHUB_USERNAME/multi-agent-orchestration",
+      "featured": true,
+      "category": "ai",
+      "status": "Active",
+      "commits": 526,
+      "prs": 30,
+      "stars": 128,
+      "updatedAt": "2026-07-22T12:00:00.000Z",
+      "githubRepo": "multi-agent-orchestration"
+    },
+    {
+      "id": "portfolio",
+      "title": "This portfolio",
+      "description": "Modular Next.js site for GitHub work and writing — sections, content adapters, and motion primitives.",
+      "tech": ["Next.js", "TypeScript", "Motion"],
+      "highlights": [
+        "Content adapters",
+        "Motion coverflow",
+        "Admin CMS",
+        "Editorial design system"
+      ],
+      "repoUrl": "https://github.com/YOUR_GITHUB_USERNAME/portfolio",
+      "featured": true,
+      "category": "tools",
+      "status": "Active",
+      "commits": 214,
+      "prs": 18,
+      "stars": 24,
+      "updatedAt": "2026-07-25T12:00:00.000Z",
+      "githubRepo": "portfolio"
+    },
+    {
+      "id": "portfolio-api",
+      "title": "Portfolio API",
+      "description": "Serverless read/write API with Cognito auth, DynamoDB, and S3 gallery uploads.",
+      "tech": ["AWS CDK", "Lambda", "DynamoDB"],
+      "highlights": [
+        "Cognito-protected writes",
+        "Presigned S3 uploads",
+        "Single-table DynamoDB",
+        "CORS gateway responses"
+      ],
+      "repoUrl": "https://github.com/YOUR_GITHUB_USERNAME/portfolio-api",
+      "featured": true,
+      "category": "cloud",
+      "status": "Active",
+      "commits": 89,
+      "prs": 12,
+      "stars": 18,
+      "updatedAt": "2026-07-24T12:00:00.000Z",
+      "githubRepo": "portfolio-api"
+    },
+    {
+      "id": "sample-cli",
+      "title": "Sample CLI",
+      "description": "Developer tooling scaffold — replace with a real repo.",
+      "tech": ["TypeScript", "Node.js"],
+      "highlights": ["Typed commands", "Fast feedback", "Composable scripts"],
+      "repoUrl": "https://github.com/YOUR_GITHUB_USERNAME/sample-cli",
+      "featured": false,
+      "category": "tools",
+      "status": "Experimental",
+      "commits": 42,
+      "prs": 5,
+      "stars": 6,
+      "githubRepo": "sample-cli"
+    },
+    {
+      "id": "side-experiment",
+      "title": "Agent eval harness",
+      "description": "Lightweight Python experiment for agent eval harnesses and prompt regression checks.",
+      "tech": ["Python", "AWS Bedrock"],
+      "highlights": ["Prompt regression", "Eval fixtures", "CI hooks"],
+      "repoUrl": "https://github.com/YOUR_GITHUB_USERNAME/side-experiment",
+      "featured": false,
+      "category": "ai",
+      "status": "Archived",
+      "githubRepo": "side-experiment"
+    }
+  ]
+}
