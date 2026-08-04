@@ -36,10 +36,12 @@ export default function AdminLoginPage() {
 
       {!configured ? (
         <p className="admin-error">
-          Missing Cognito env vars. Add{" "}
-          <code>NEXT_PUBLIC_COGNITO_USER_POOL_ID</code>,{" "}
-          <code>NEXT_PUBLIC_COGNITO_CLIENT_ID</code>, and{" "}
-          <code>NEXT_PUBLIC_COGNITO_REGION</code> to <code>.env.local</code>.
+          Missing Cognito env vars in this build. For local dev, set them in{" "}
+          <code>.env.local</code>. For GitHub Pages, add repository secrets{" "}
+          <code>NEXT_PUBLIC_API_URL</code>,{" "}
+          <code>NEXT_PUBLIC_COGNITO_REGION</code>,{" "}
+          <code>NEXT_PUBLIC_COGNITO_USER_POOL_ID</code>, and{" "}
+          <code>NEXT_PUBLIC_COGNITO_CLIENT_ID</code>, then redeploy.
         </p>
       ) : (
         <form className="admin-form" onSubmit={onSubmit}>
