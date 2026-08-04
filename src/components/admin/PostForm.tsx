@@ -134,7 +134,10 @@ export function PostForm({ mode, slug }: PostFormProps) {
     <section className="admin-card">
       <h1>{mode === "create" ? "New blog post" : "Edit blog post"}</h1>
       <p className="admin-card__lede">
-        Markdown body plus an optional photo gallery. Tags are indexed in GSI2.
+        Body accepts <strong>HTML</strong> and Markdown. Title and summary are
+        rendered by the page chrome — start the body at the first{" "}
+        <code>&lt;p&gt;</code> or <code>&lt;h2&gt;</code>, not another{" "}
+        <code>&lt;h1&gt;</code> / <code>&lt;article&gt;</code>.
       </p>
       <form className="admin-form" onSubmit={onSubmit}>
         <label>
@@ -176,14 +179,36 @@ export function PostForm({ mode, slug }: PostFormProps) {
           />
         </label>
         <label>
-          Content (Markdown)
+          Content (HTML or Markdown)
           <textarea
-            rows={12}
+            rows={16}
             value={content}
             onChange={(e) => setContent(e.target.value)}
             required
+            spellCheck={false}
+            className="font-mono text-sm"
+            placeholder={`<h2>Key Features</h2>
+<p>A short intro paragraph…</p>
+<ul>
+  <li><strong>Stripe Checkout</strong> — secure payments</li>
+  <li>Digital e-tickets with QR codes</li>
+</ul>
+<table>
+  <thead><tr><th>Step</th><th>Feature</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>Donation modal</td></tr>
+  </tbody>
+</table>`}
           />
         </label>
+        <p className="admin-hint">
+          Use: <code>&lt;h2&gt;</code>, <code>&lt;p&gt;</code>,{" "}
+          <code>&lt;ul&gt;</code>, <code>&lt;table&gt;</code>,{" "}
+          <code>&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;</code>.
+          Skip <code>&lt;article&gt;</code>, <code>&lt;header&gt;</code>, and a
+          second title — those already come from the site layout. Scripts are
+          stripped on the public page.
+        </p>
         <label className="admin-check">
           <input
             type="checkbox"

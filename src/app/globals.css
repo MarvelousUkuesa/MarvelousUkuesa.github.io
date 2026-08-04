@@ -560,10 +560,14 @@ section[id] {
 }
 
 .about__body {
-  margin: 1.1rem 0 0;
+  margin: 0.9rem 0 0;
   color: var(--ink-muted);
   max-width: 42ch;
   line-height: 1.65;
+}
+
+.about__body + .about__body {
+  margin-top: 0.75rem;
 }
 
 .focus-cycle {
@@ -593,6 +597,18 @@ section[id] {
   font-family: var(--font-serif);
   font-style: italic;
   color: var(--accent);
+}
+
+.focus-cycle__link {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.focus-cycle__link:hover {
+  border-bottom-color: var(--accent);
+  color: var(--ink);
 }
 
 .craft-field {
@@ -641,7 +657,7 @@ section[id] {
 }
 
 .craft-field__note {
-  min-height: 3.4rem;
+  min-height: 4.6rem;
   margin-top: 1.1rem;
   padding-top: 1rem;
   border-top: 1px solid var(--line);
@@ -654,6 +670,34 @@ section[id] {
 
 .craft-field__note p {
   margin: 0;
+}
+
+.craft-field__project {
+  margin-top: 0.55rem !important;
+  font-family: var(--font-sans, inherit);
+  font-size: 0.88rem;
+  font-style: normal;
+  letter-spacing: 0.01em;
+}
+
+.craft-field__project-label {
+  color: var(--ink-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.72rem;
+}
+
+.craft-field__project-link {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.craft-field__project-link:hover {
+  border-bottom-color: var(--accent);
+  color: var(--ink);
 }
 
 .craft-field__idle {
@@ -873,6 +917,40 @@ section[id] {
   color: var(--ink);
 }
 
+.article-prose table {
+  width: 100%;
+  margin: 0 0 1.5rem;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+.article-prose th,
+.article-prose td {
+  border: 1px solid var(--line);
+  padding: 0.65rem 0.75rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.article-prose th {
+  background: color-mix(in srgb, var(--ink) 5%, var(--bg-elevated));
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.article-prose tbody tr:nth-child(even) {
+  background: color-mix(in srgb, var(--ink) 2.5%, transparent);
+}
+
+.article-prose hr {
+  display: none;
+}
+
 .prose-article {
   color: var(--ink);
 }
@@ -1075,6 +1153,21 @@ section[id] {
 .admin-card__lede {
   margin: 0.45rem 0 1.25rem;
   color: var(--ink-muted);
+}
+
+.admin-hint {
+  margin: -0.35rem 0 0;
+  font-size: 0.82rem;
+  font-weight: 400;
+  color: var(--ink-muted);
+  line-height: 1.45;
+}
+
+.admin-hint code {
+  font-size: 0.78rem;
+  padding: 0.1rem 0.3rem;
+  background: color-mix(in srgb, var(--ink) 6%, transparent);
+  border-radius: var(--radius);
 }
 
 .admin-form {

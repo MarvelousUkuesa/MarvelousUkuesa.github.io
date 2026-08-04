@@ -52,7 +52,10 @@ export async function fetchPostsFromApi(): Promise<Post[] | null> {
   if (!base) return null;
 
   try {
-    const res = await fetch(`${base}/posts`, { next: { revalidate: 60 } });
+    const res = await fetch(`${base}/posts`, {
+      // Fresh enough after admin uploads; avoid serving stale demo fallbacks.
+      next: { revalidate: 10, tags: ["posts"] },
+    });
     if (!res.ok) return null;
     const data = (await res.json()) as { posts?: ApiPost[] };
     return (data.posts ?? []).map(normalizeApiPost);
@@ -70,7 +73,7 @@ export async function fetchPostBySlugFromApi(slug: string): Promise<{
 
   try {
     const res = await fetch(`${base}/posts/${encodeURIComponent(slug)}`, {
-      next: { revalidate: 60 },
+      next: { revalidate: 10, tags: ["posts", `post:${slug}`] },
     });
     if (!res.ok) return null;
     const data = (await res.json()) as {

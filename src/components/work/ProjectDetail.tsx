@@ -4,6 +4,7 @@ import {
   ProjectPager,
   type ProjectNavItem,
 } from "@/components/work/ProjectPager";
+import { ProjectGalleryCarousel } from "@/components/work/ProjectGalleryCarousel";
 import { ProjectReadMore } from "@/components/work/ProjectReadMore";
 import {
   formatUpdated,
@@ -44,21 +45,8 @@ function galleryImages(project: Project): string[] {
   return [];
 }
 
-function leadSentence(description: string) {
-  const text = description.trim();
-  if (!text) return "";
-  const match = text.match(/^(.+?[.!?])(\s|$)/);
-  if (match?.[1] && match[1].length <= 160) return match[1];
-  if (text.length <= 140) return text;
-  const slice = text.slice(0, 140);
-  const lastSpace = slice.lastIndexOf(" ");
-  return `${(lastSpace > 50 ? slice.slice(0, lastSpace) : slice).trim()}…`;
-}
-
 export function ProjectDetail({ project, projects, prev, next }: Props) {
   const images = galleryImages(project);
-  const singleImage = images.length === 1 ? images[0] : undefined;
-  const multiImages = images.length > 1 ? images : [];
   const status = projectStatus(project);
   const category = projectCategory(project);
   const role = ROLE_BY_CATEGORY[category];
@@ -69,7 +57,6 @@ export function ProjectDetail({ project, projects, prev, next }: Props) {
     project.commits != null ||
     project.prs != null ||
     typeof project.stars === "number";
-  const lead = leadSentence(project.description);
 
   const showPrev = prev && prev.id !== project.id ? prev : null;
   const showNext = next && next.id !== project.id ? next : null;
@@ -99,12 +86,6 @@ export function ProjectDetail({ project, projects, prev, next }: Props) {
                 <h1 className="mt-3 font-[family-name:var(--font-display)] text-2xl font-bold tracking-tight text-[var(--ink)] sm:text-3xl lg:text-[clamp(2rem,3.5vw,2.75rem)] lg:leading-[1.1]">
                   {project.title}
                 </h1>
-
-                {lead ? (
-                  <p className="about__lead mt-4 max-w-[42rem] text-justify">
-                    {lead}
-                  </p>
-                ) : null}
               </header>
             </FadeIn>
 
@@ -276,37 +257,12 @@ export function ProjectDetail({ project, projects, prev, next }: Props) {
               </div>
             </FadeIn>
 
-            {singleImage ? (
+            {images.length > 0 ? (
               <FadeIn delay={0.04}>
-                <div className="w-full overflow-hidden border border-[var(--line)] bg-[var(--bg-elevated)] [border-radius:var(--radius)]">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={singleImage}
-                    alt=""
-                    className="aspect-[4/3] w-full object-cover object-top"
-                  />
-                </div>
-              </FadeIn>
-            ) : null}
-
-            {multiImages.length > 0 ? (
-              <FadeIn delay={0.04}>
-                <ul className="grid w-full grid-cols-1 gap-3">
-                  {multiImages.map((src) => (
-                    <li
-                      key={src}
-                      className="w-full overflow-hidden border border-[var(--line)] bg-[var(--bg-elevated)] [border-radius:var(--radius)]"
-                    >
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={src}
-                        alt=""
-                        loading="lazy"
-                        className="aspect-[4/3] w-full object-cover object-top"
-                      />
-                    </li>
-                  ))}
-                </ul>
+                <ProjectGalleryCarousel
+                  images={images}
+                  label={`${project.title} gallery`}
+                />
               </FadeIn>
             ) : null}
           </aside>

@@ -38,11 +38,14 @@ async function getLocalPosts(): Promise<Post[]> {
     .sort((a, b) => +new Date(b.date) - +new Date(a.date));
 }
 
-/** Prefer API posts when NEXT_PUBLIC_API_URL is set; else local markdown. */
+/**
+ * Prefer portfolio-api when NEXT_PUBLIC_API_URL is set.
+ * Once the API responds, never mix in local demo markdown — even if the list is empty.
+ */
 export async function getPosts(): Promise<Post[]> {
   if (isApiConfigured()) {
     const remote = await fetchPostsFromApi();
-    if (remote && remote.length > 0) return remote;
+    if (remote) return remote;
   }
   return getLocalPosts();
 }
@@ -51,6 +54,9 @@ export async function getPostBySlug(slug: string): Promise<Post | undefined> {
   if (isApiConfigured()) {
     const remote = await fetchPostBySlugFromApi(slug);
     if (remote) return remote.post;
+    // API is configured: missing slug is a real miss, not a cue to serve demo posts.
+    const list = await fetchPostsFromApi();
+    if (list) return undefined;
   }
   const posts = await getLocalPosts();
   return posts.find((p) => p.slug === slug);
@@ -69,6 +75,8 @@ export async function getPostWithRelated(slug: string): Promise<{
         relatedProject: remote.relatedProject,
       };
     }
+    const list = await fetchPostsFromApi();
+    if (list) return null;
   }
 
   const post = await getPostBySlug(slug);

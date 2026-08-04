@@ -10,11 +10,11 @@ export const site = {
   tagline: "I build things, then write about what I learned.",
   email: "hello@example.com",
   links: {
-    github: "https://github.com/YOUR_GITHUB_USERNAME",
-    linkedin: "https://linkedin.com/in/YOUR_HANDLE",
+    github: "https://github.com/MarvelousUkuesa",
+    linkedin: "https://www.linkedin.com/in/marvelous-ukuesa-22ba86250",
   },
   /** Used by the GitHub adapter when NEXT_PUBLIC_GITHUB_USER is unset */
-  githubUsername: "YOUR_GITHUB_USERNAME",
+  githubUsername: "MarvelousUkuesa",
 
   author: {
     name: "Mars",
@@ -23,9 +23,14 @@ export const site = {
   },
 
   about: {
-    /** Short opener — capability without a pitch */
-    lead: "I care about clear systems, honest interfaces, and work that still makes sense six months later.",
-    body: "Most days that looks like shaping products end-to-end: from the first sketch of an idea to something people can actually use. I write about the parts that were messy, because the mess is usually where the skill shows.",
+    /** Short opener — who you are */
+    lead: "Hi, I'm Ukuesa Marvelous — most people call me Mars, and you're welcome to do the same.",
+    /** Longer story — rendered as stacked paragraphs */
+    body: [
+      "I'm from Nigeria, where I studied Chemistry before curiosity about technology brought me to Germany for a Bachelor's in Software Engineering.",
+      "I build reliable, secure, and scalable systems — backend, cloud, DevSecOps, and AI apps — always asking not just how something works, but why it was designed that way. This site is where I write and share what I'm building.",
+      "When I'm not coding, I'm usually reading, playing football, jogging, or learning something that challenges how I think.",
+    ],
     /** Cycles on the page — soft proof of range */
     focus: [
       "shipping calm interfaces",

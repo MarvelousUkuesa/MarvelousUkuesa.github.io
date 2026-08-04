@@ -3,10 +3,45 @@
 import type { Components } from "react-markdown";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
+import rehypeSanitize, { defaultSchema } from "rehype-sanitize";
 import { CodeBlock } from "@/components/blog/CodeBlock";
 
 type Props = {
   content: string;
+};
+
+/** Allow common article HTML while stripping scripts/events. */
+const sanitizeSchema = {
+  ...defaultSchema,
+  attributes: {
+    ...defaultSchema.attributes,
+    code: [
+      ...(defaultSchema.attributes?.code ?? []),
+      ["className", /^language-./],
+    ],
+    span: [...(defaultSchema.attributes?.span ?? []), ["className"]],
+    div: [...(defaultSchema.attributes?.div ?? []), ["className"]],
+    img: [
+      ...(defaultSchema.attributes?.img ?? []),
+      ["className"],
+      ["loading"],
+    ],
+    a: [...(defaultSchema.attributes?.a ?? []), ["className"], ["target"], ["rel"]],
+    table: [...(defaultSchema.attributes?.table ?? []), ["className"]],
+    th: [...(defaultSchema.attributes?.th ?? []), ["className"], ["align"]],
+    td: [...(defaultSchema.attributes?.td ?? []), ["className"], ["align"]],
+  },
+  tagNames: [
+    ...(defaultSchema.tagNames ?? []),
+    "video",
+    "source",
+    "figure",
+    "figcaption",
+    "section",
+    "header",
+    "footer",
+  ],
 };
 
 function languageFromClassName(className?: string) {
@@ -53,10 +88,18 @@ const components: Components = {
   },
 };
 
+/**
+ * Renders post body as Markdown and/or HTML.
+ * HTML is parsed via rehype-raw and sanitized before display.
+ */
 export function Markdown({ content }: Props) {
   return (
     <div className="prose prose-slate article-prose max-w-none">
-      <ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        rehypePlugins={[rehypeRaw, [rehypeSanitize, sanitizeSchema]]}
+        components={components}
+      >
         {content}
       </ReactMarkdown>
     </div>
