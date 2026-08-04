@@ -4,6 +4,11 @@ const TOKEN_KEY = "portfolio_admin_id_token";
 const REFRESH_KEY = "portfolio_admin_refresh_token";
 const EMAIL_KEY = "portfolio_admin_email";
 
+/** Trim GitHub Actions / .env paste noise (trailing newlines break Cognito). */
+function env(name: string): string {
+  return (process.env[name] ?? "").trim();
+}
+
 export function getAdminToken(): string | null {
   if (typeof window === "undefined") return null;
   return sessionStorage.getItem(TOKEN_KEY);
@@ -39,10 +44,10 @@ export function clearAdminSession() {
 
 export function isAdminConfigured() {
   return Boolean(
-    process.env.NEXT_PUBLIC_API_URL &&
-      process.env.NEXT_PUBLIC_COGNITO_USER_POOL_ID &&
-      process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID &&
-      process.env.NEXT_PUBLIC_COGNITO_REGION,
+    env("NEXT_PUBLIC_API_URL") &&
+      env("NEXT_PUBLIC_COGNITO_USER_POOL_ID") &&
+      env("NEXT_PUBLIC_COGNITO_CLIENT_ID") &&
+      env("NEXT_PUBLIC_COGNITO_REGION"),
   );
 }
 
@@ -57,7 +62,7 @@ type CognitoAuthResult = {
 };
 
 async function cognitoInitiateAuth(body: Record<string, unknown>) {
-  const region = process.env.NEXT_PUBLIC_COGNITO_REGION!;
+  const region = env("NEXT_PUBLIC_COGNITO_REGION");
   const res = await fetch(`https://cognito-idp.${region}.amazonaws.com/`, {
     method: "POST",
     headers: {
@@ -72,7 +77,7 @@ async function cognitoInitiateAuth(body: Record<string, unknown>) {
 
 /** Browser login against Cognito USER_PASSWORD_AUTH (public app client). */
 export async function loginAdmin(email: string, password: string) {
-  const clientId = process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID!;
+  const clientId = env("NEXT_PUBLIC_COGNITO_CLIENT_ID");
   const { res, data } = await cognitoInitiateAuth({
     AuthFlow: "USER_PASSWORD_AUTH",
     ClientId: clientId,
@@ -98,7 +103,7 @@ export async function loginAdmin(email: string, password: string) {
 async function refreshAdminSession(): Promise<string | null> {
   const refreshToken = getRefreshToken();
   const email = getAdminEmail();
-  const clientId = process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID;
+  const clientId = env("NEXT_PUBLIC_COGNITO_CLIENT_ID");
   if (!refreshToken || !email || !clientId) return null;
 
   const { res, data } = await cognitoInitiateAuth({
@@ -128,7 +133,7 @@ export async function adminFetch(
   init: RequestInit = {},
   retried = false,
 ): Promise<Response> {
-  const base = process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") ?? "";
+  const base = env("NEXT_PUBLIC_API_URL").replace(/\/$/, "");
   const token = getAdminToken();
   if (!token) throw new Error("Not signed in");
 

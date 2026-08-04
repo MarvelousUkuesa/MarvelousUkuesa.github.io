@@ -8,19 +8,26 @@ import {
   useAdminAuth,
 } from "@/components/admin/AdminAuthProvider";
 
+function normalizePath(pathname: string) {
+  if (pathname.length > 1 && pathname.endsWith("/")) {
+    return pathname.slice(0, -1);
+  }
+  return pathname;
+}
+
 function AdminShell({ children }: { children: ReactNode }) {
   const { ready, isAuthenticated, email, logout } = useAdminAuth();
-  const pathname = usePathname();
+  const pathname = normalizePath(usePathname() ?? "");
   const router = useRouter();
   const isLogin = pathname === "/admin/login";
 
   useEffect(() => {
     if (!ready) return;
     if (!isAuthenticated && !isLogin) {
-      router.replace("/admin/login");
+      router.replace("/admin/login/");
     }
     if (isAuthenticated && isLogin) {
-      router.replace("/admin");
+      router.replace("/admin/");
     }
   }, [ready, isAuthenticated, isLogin, router]);
 
