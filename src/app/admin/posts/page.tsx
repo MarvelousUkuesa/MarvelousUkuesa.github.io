@@ -58,7 +58,7 @@ export default function AdminPostsPage() {
                   {p.date ?? ""} · {p.gallery?.length ?? 0} photos
                 </span>
               </div>
-              <Link href={`/admin/posts/${encodeURIComponent(p.slug)}/edit`}>
+              <Link href={`/admin/posts/edit/?slug=${encodeURIComponent(p.slug)}`}>
                 Edit
               </Link>
             </li>

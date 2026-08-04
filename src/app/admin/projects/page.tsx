@@ -58,7 +58,7 @@ export default function AdminProjectsPage() {
                   {p.id} · {p.gallery?.length ?? 0} photos
                 </span>
               </div>
-              <Link href={`/admin/projects/${encodeURIComponent(p.id)}/edit`}>
+              <Link href={`/admin/projects/edit/?id=${encodeURIComponent(p.id)}`}>
                 Edit
               </Link>
             </li>
