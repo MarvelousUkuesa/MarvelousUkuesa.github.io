@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { getApiUrl } from "@/config/publicApi";
 
 type ProjectRow = {
   id: string;
@@ -17,7 +18,7 @@ export default function AdminProjectsPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const base = process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") ?? "";
+    const base = getApiUrl();
     fetch(`${base}/projects?all=1`)
       .then(async (res) => {
         const data = await res.json();

@@ -1,7 +1,8 @@
 import { type Project, projectSchema } from "@/lib/schemas/project";
+import { getApiUrl } from "@/config/publicApi";
 
 function apiBaseUrl() {
-  return process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") ?? "";
+  return getApiUrl();
 }
 
 export function isApiConfigured() {

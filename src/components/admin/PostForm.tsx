@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState, type FormEvent } from "react";
 import { GalleryEditor } from "@/components/admin/GalleryEditor";
 import { adminFetch } from "@/lib/admin/auth";
+import { getApiUrl } from "@/config/publicApi";
 
 type PostFormProps = {
   mode: "create" | "edit";
@@ -30,7 +31,7 @@ export function PostForm({ mode, slug }: PostFormProps) {
     let cancelled = false;
     (async () => {
       try {
-        const base = process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") ?? "";
+        const base = getApiUrl();
         const res = await fetch(
           `${base}/posts/${encodeURIComponent(slug)}?all=1`,
         );

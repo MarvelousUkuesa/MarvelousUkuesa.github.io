@@ -1,9 +1,10 @@
 import { type Post, postSchema } from "@/lib/schemas/post";
 import { type Project } from "@/lib/schemas/project";
 import { normalizeApiProject } from "@/lib/api/projects";
+import { getApiUrl } from "@/config/publicApi";
 
 function apiBaseUrl() {
-  return process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") ?? "";
+  return getApiUrl();
 }
 
 export function isApiConfigured() {

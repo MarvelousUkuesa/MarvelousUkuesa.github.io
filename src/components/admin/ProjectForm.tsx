@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState, type FormEvent } from "react";
 import { GalleryEditor } from "@/components/admin/GalleryEditor";
 import { adminFetch } from "@/lib/admin/auth";
+import { getApiUrl } from "@/config/publicApi";
 
 type ProjectFormProps = {
   mode: "create" | "edit";
@@ -41,7 +42,7 @@ export function ProjectForm({ mode, projectId }: ProjectFormProps) {
     let cancelled = false;
     (async () => {
       try {
-        const base = process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") ?? "";
+        const base = getApiUrl();
         const res = await fetch(
           `${base}/projects/${encodeURIComponent(projectId)}?all=1`,
         );

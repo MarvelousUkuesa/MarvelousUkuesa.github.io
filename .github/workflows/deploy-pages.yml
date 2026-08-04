@@ -30,13 +30,14 @@ jobs:
       - name: Install
         run: npm ci
 
+      # Public API/Cognito defaults live in src/config/publicApi.ts.
+      # Optional secrets still override when present.
       - name: Build static site
-        # Trim secrets — a trailing newline in a GitHub secret breaks Cognito ClientId.
         run: |
-          export NEXT_PUBLIC_API_URL="$(printf '%s' "$NEXT_PUBLIC_API_URL" | tr -d '\r\n')"
-          export NEXT_PUBLIC_COGNITO_REGION="$(printf '%s' "$NEXT_PUBLIC_COGNITO_REGION" | tr -d '\r\n')"
-          export NEXT_PUBLIC_COGNITO_USER_POOL_ID="$(printf '%s' "$NEXT_PUBLIC_COGNITO_USER_POOL_ID" | tr -d '\r\n')"
-          export NEXT_PUBLIC_COGNITO_CLIENT_ID="$(printf '%s' "$NEXT_PUBLIC_COGNITO_CLIENT_ID" | tr -d '\r\n')"
+          export NEXT_PUBLIC_API_URL="$(printf '%s' "${NEXT_PUBLIC_API_URL:-}" | tr -d '\r\n')"
+          export NEXT_PUBLIC_COGNITO_REGION="$(printf '%s' "${NEXT_PUBLIC_COGNITO_REGION:-}" | tr -d '\r\n')"
+          export NEXT_PUBLIC_COGNITO_USER_POOL_ID="$(printf '%s' "${NEXT_PUBLIC_COGNITO_USER_POOL_ID:-}" | tr -d '\r\n')"
+          export NEXT_PUBLIC_COGNITO_CLIENT_ID="$(printf '%s' "${NEXT_PUBLIC_COGNITO_CLIENT_ID:-}" | tr -d '\r\n')"
           npm run build
         env:
           NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
