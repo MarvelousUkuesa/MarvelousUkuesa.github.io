@@ -1,13 +1,11 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
 import { useAdminAuth } from "@/components/admin/AdminAuthProvider";
 import { isAdminConfigured } from "@/lib/admin/auth";
 
 export default function AdminLoginPage() {
   const { login } = useAdminAuth();
-  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -20,7 +18,8 @@ export default function AdminLoginPage() {
     setPending(true);
     try {
       await login(email.trim(), password);
-      router.replace("/admin/");
+      // Hard nav — static export soft routing can leave you on /admin/login/.
+      window.location.assign("/admin/");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Login failed");
     } finally {
