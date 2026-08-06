@@ -38,7 +38,7 @@ function coverFor(project: Project) {
 const VISIBLE_RANGE = 3;
 const Z_MAX = 220;
 const TILT_MAX = 8;
-const SPREAD_DESKTOP = 128;
+const SPREAD_DESKTOP = 280;
 
 const MOCK_THEMES = [
   { bg: "#1a2420", panel: "#243530", accent: "#9ec9c0", ink: "#e8ece9", muted: "#8a9a92" },
@@ -307,7 +307,7 @@ export function CoverflowCarousel({ projects }: Props) {
     count > 0 ? Math.floor(count / 2) : 0,
   );
   const [dragX, setDragX] = useState(0);
-  const [spread, setSpread] = useState(physics.spread || SPREAD_DESKTOP);
+  const [viewportW, setViewportW] = useState(1280);
   const reduceMotion = useReducedMotion();
   const stageRef = useRef<HTMLDivElement>(null);
   const dragMoved = useRef(false);
@@ -321,9 +321,11 @@ export function CoverflowCarousel({ projects }: Props) {
   }, [count]);
 
   useEffect(() => {
-    if (bp === "mobile") return;
-    setSpread(physics.spread);
-  }, [bp, physics.spread]);
+    const sync = () => setViewportW(window.innerWidth);
+    sync();
+    window.addEventListener("resize", sync);
+    return () => window.removeEventListener("resize", sync);
+  }, []);
 
   const goTo = useCallback(
     (index: number) => {
@@ -334,6 +336,24 @@ export function CoverflowCarousel({ projects }: Props) {
     [count],
   );
 
+  const isDesktop = bp === "desktop";
+  // Center card ~70% of the page; neighbors peek via scaled spread.
+  const cardW = isDesktop
+    ? "min(30vw, 28rem)"
+    : bp === "tablet"
+      ? "min(40vw, 24rem)"
+      : "clamp(18rem, 30vw, 22.5rem)";
+  const cardH = isDesktop
+    ? "360px"
+    : bp === "tablet"
+      ? "clamp(18rem, 38vw, 22rem)"
+      : "clamp(24rem, 40vw, 28.5rem)";
+  const cardSpread = isDesktop
+    ? Math.min(viewportW * 0.12, 180)
+    : bp === "tablet"
+      ? Math.min(viewportW * 0.12, 160)
+      : physics.spread || SPREAD_DESKTOP;
+
   const onDrag = (_: unknown, info: PanInfo) => {
     if (Math.abs(info.offset.x) > 6) dragMoved.current = true;
     setDragX(info.offset.x);
@@ -341,7 +361,7 @@ export function CoverflowCarousel({ projects }: Props) {
 
   const onDragEnd = (_: unknown, info: PanInfo) => {
     const projected = info.offset.x + info.velocity.x * 0.18;
-    const delta = Math.round(-projected / Math.max(spread, 1));
+    const delta = Math.round(-projected / Math.max(cardSpread, 1));
     setDragX(0);
     window.setTimeout(() => {
       dragMoved.current = false;
@@ -352,18 +372,7 @@ export function CoverflowCarousel({ projects }: Props) {
   const safeActive = count ? Math.min(active, count - 1) : 0;
   const current = count ? projects[safeActive] : null;
   const accent = current ? themeFor(current.id).accent : "#a8cfc6";
-  const progress = safeActive - (spread ? dragX / spread : 0);
-  const isDesktop = bp === "desktop";
-  const cardW = isDesktop
-    ? "clamp(14rem, 18vw, 16.5rem)"
-    : bp === "tablet"
-      ? "clamp(14rem, 28vw, 16.5rem)"
-      : "clamp(18rem, 30vw, 22.5rem)";
-  const cardH = isDesktop
-    ? "360px"
-    : bp === "tablet"
-      ? "clamp(18rem, 38vw, 22rem)"
-      : "clamp(24rem, 40vw, 28.5rem)";
+  const progress = safeActive - (cardSpread ? dragX / cardSpread : 0);
 
   if (!count || !current) return null;
 
@@ -448,7 +457,7 @@ export function CoverflowCarousel({ projects }: Props) {
                   }}
                   initial={false}
                   animate={{
-                    x: offset * spread,
+                    x: offset * cardSpread,
                     rotateY: base.rotateY,
                     z: base.z,
                     scale: base.scale,

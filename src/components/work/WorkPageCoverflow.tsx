@@ -105,15 +105,16 @@ export function WorkPageCoverflow({ projects }: Props) {
     count > 0 ? Math.floor(count / 2) : 0,
   );
   const [dragX, setDragX] = useState(0);
+  const [viewportW, setViewportW] = useState(1280);
   const reduce = useReducedMotion();
   const stageRef = useRef<HTMLDivElement>(null);
   const dragMoved = useRef(false);
 
   const cardW =
     bp === "desktop"
-      ? "clamp(12.5rem, 16vw, 15rem)"
+      ? "min(30vw, 28rem)"
       : bp === "tablet"
-        ? "clamp(12.5rem, 28vw, 15.5rem)"
+        ? "min(40vw, 24rem)"
         : "clamp(13.5rem, 20vw, 17rem)";
   const cardH =
     bp === "desktop"
@@ -121,7 +122,20 @@ export function WorkPageCoverflow({ projects }: Props) {
       : bp === "tablet"
         ? "clamp(16rem, 36vw, 20rem)"
         : "clamp(17.5rem, 26vw, 21.5rem)";
-  const spread = physics.spread;
+
+  useEffect(() => {
+    const sync = () => setViewportW(window.innerWidth);
+    sync();
+    window.addEventListener("resize", sync);
+    return () => window.removeEventListener("resize", sync);
+  }, []);
+
+  const spread =
+    bp === "desktop"
+      ? Math.min(viewportW * 0.12, 180)
+      : bp === "tablet"
+        ? Math.min(viewportW * 0.12, 160)
+        : physics.spread;
 
   const goTo = useCallback(
     (i: number) => {

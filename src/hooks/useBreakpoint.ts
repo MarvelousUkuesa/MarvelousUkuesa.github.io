@@ -58,9 +58,9 @@ export function coverflowPhysics(bp: Breakpoint) {
   if (bp === "tablet") {
     return {
       rotateY: 28,
-      spread: 110,
+      spread: 220,
       zStep: 70,
-      perspective: "900px" as string | undefined,
+      perspective: "1100px" as string | undefined,
       enable3d: true,
       enableTilt: false,
       enableGlowFollow: false,
@@ -68,10 +68,10 @@ export function coverflowPhysics(bp: Breakpoint) {
     };
   }
   return {
-    rotateY: 40,
-    spread: 128,
+    rotateY: 36,
+    spread: 280,
     zStep: 90,
-    perspective: "900px" as string | undefined,
+    perspective: "1200px" as string | undefined,
     enable3d: true,
     enableTilt: true,
     enableGlowFollow: true,
