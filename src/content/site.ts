@@ -18,18 +18,18 @@ export const site = {
 
   author: {
     name: "Mars",
-    title: "Cloud & AI Infrastructure Engineer",
-    bio: "I design agentic systems and calm cloud infrastructure — then write down what actually worked in production.",
+    /** Shown under the brand on the homepage and in article bylines */
+    credential: "Software Engineer ",
+    title: "Specializing in Cloud, SAP & AI Infrastructure",
+    bio: "I design agentic systems and calm cloud infrastructure, then write down what actually worked in production.",
   },
 
   about: {
     /** Short opener — who you are */
-    lead: "Hi, I'm Ukuesa Marvelous — most people call me Mars, and you're welcome to do the same.",
-    /** Longer story — rendered as stacked paragraphs */
+    lead: "Hi, I'm  Marvelous Ukuesa, but most people call me Mars.",
     body: [
-      "I'm from Nigeria, where I studied Chemistry before curiosity about technology brought me to Germany for a Bachelor's in Software Engineering.",
-      "I build reliable, secure, and scalable systems — backend, cloud, DevSecOps, and AI apps — always asking not just how something works, but why it was designed that way. This site is where I write and share what I'm building.",
-      "When I'm not coding, I'm usually reading, playing football, jogging, or learning something that challenges how I think.",
+      "I build reliable, secure, and scalable systems: backend, cloud, DevSecOps, and AI apps. Always asking not just how something works, but why it was designed that way. This site is where I write and share what I'm building.",
+      "When I'm not coding, I'm reading, playing football, jogging, or learning something that challenges how I think.",
     ],
     /** Cycles on the page — soft proof of range */
     focus: [

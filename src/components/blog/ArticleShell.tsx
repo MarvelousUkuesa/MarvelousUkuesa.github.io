@@ -76,6 +76,9 @@ export function ArticleShell({
                     <p className="text-sm font-semibold text-[var(--ink)]">
                       {site.author.name}
                     </p>
+                    <p className="mt-0.5 text-sm leading-snug text-[var(--ink-muted)]">
+                      {site.author.credential}
+                    </p>
                     <p className="text-sm text-[var(--ink-muted)]">
                       {site.author.title}
                     </p>
@@ -137,7 +140,10 @@ export function ArticleShell({
                   <p className="font-[family-name:var(--font-display)] text-base font-bold text-[var(--ink)]">
                     {site.author.name}
                   </p>
-                  <p className="mt-0.5 text-sm text-[var(--ink-muted)]">
+                  <p className="mt-1 font-[family-name:var(--font-display)] text-sm font-semibold leading-snug tracking-tight text-[var(--ink)]">
+                    {site.author.credential}
+                  </p>
+                  <p className="mt-1 text-sm text-[var(--ink-muted)]">
                     {site.author.title}
                   </p>
                   <p className="mt-3 text-sm leading-relaxed text-[var(--ink-muted)]">

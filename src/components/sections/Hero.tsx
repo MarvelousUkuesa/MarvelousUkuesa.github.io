@@ -48,12 +48,28 @@ export function Hero() {
           delay={0.05}
         />
 
+        <motion.div
+          className="hero__identity"
+          initial={
+            reduce
+              ? false
+              : mobile
+                ? { opacity: 0, scale: 0.97 }
+                : { opacity: 0, y: 12 }
+          }
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.65, ease: EASE_EXPO, delay: 0.18 }}
+        >
+          <p className="hero__credential">{site.author.credential}</p>
+          <p className="hero__role">{site.author.title}</p>
+        </motion.div>
+
         <h1 id="hero-heading" className="hero__title">
           <RevealLines
             text={site.tagline}
             as="span"
             byWord
-            delay={0.22}
+            delay={0.28}
             className="hero__title-reveal"
           />
         </h1>
