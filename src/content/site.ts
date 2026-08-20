@@ -8,7 +8,7 @@ export const site = {
   description:
     "Portfolio of GitHub projects and writing about building software.",
   tagline: "I build things, then write about what I learned.",
-  email: "prinmars08@gmail.com",
+  email: "marsukuesa@gmail.com",
   links: {
     github: "https://github.com/MarvelousUkuesa",
     linkedin: "https://www.linkedin.com/in/marvelous-ukuesa-22ba86250",
